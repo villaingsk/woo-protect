@@ -1,0 +1,176 @@
+# Woo-Protect
+
+msgid ""
+msgstr ""
+"Project-Id-Version: Woo-Protect 1.0.0\n"
+"Report-Msgid-Bugs-To: https://krefstudio.com/support\n"
+"POT-Creation-Date: 2026-02-06 21:24:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: woo-protect.php
+msgid "<strong>Woo-Protect</strong> requires WooCommerce to be installed and active. Please <a href=\"%s\">install WooCommerce</a> first."
+msgstr ""
+
+msgid "Woo-Protect requires WooCommerce to be installed and active. Please install WooCommerce first."
+msgstr ""
+
+msgid "Protected Category"
+msgstr ""
+
+msgid "This category is password protected. Please enter the password to continue."
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+#: includes/class-woo-protect.php
+msgid "Settings saved successfully!"
+msgstr ""
+
+msgid "Error saving settings. Please try again."
+msgstr ""
+
+msgid "Verifying password..."
+msgstr ""
+
+msgid "Incorrect password. Please try again."
+msgstr ""
+
+msgid "An error occurred. Please try again."
+msgstr ""
+
+#: includes/class-admin-settings.php
+msgid "Woo-Protect Settings"
+msgstr ""
+
+msgid "Woo-Protect"
+msgstr ""
+
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+msgid "Insufficient permissions."
+msgstr ""
+
+#: admin/views/settings-page.php
+msgid "Protected Categories"
+msgstr ""
+
+msgid "Select categories to protect with password. Customers must enter the correct password to view products in these categories."
+msgstr ""
+
+msgid "Enable"
+msgstr ""
+
+msgid "Category"
+msgstr ""
+
+msgid "Password"
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Parent:"
+msgstr ""
+
+msgid "Enter password"
+msgstr ""
+
+msgid "Leave blank to keep existing password"
+msgstr ""
+
+msgid "No product categories found."
+msgstr ""
+
+msgid "Create a category"
+msgstr ""
+
+msgid "Lock Screen Settings"
+msgstr ""
+
+msgid "Customize the password form that customers will see when accessing protected categories."
+msgstr ""
+
+msgid "Lock Screen Title"
+msgstr ""
+
+msgid "The title displayed on the password form."
+msgstr ""
+
+msgid "Lock Screen Message"
+msgstr ""
+
+msgid "The message displayed below the title."
+msgstr ""
+
+msgid "Session Duration"
+msgstr ""
+
+msgid "hours"
+msgstr ""
+
+msgid "How long customers can access protected categories after entering the password (1-168 hours)."
+msgstr ""
+
+msgid "Redirect URL (Optional)"
+msgstr ""
+
+msgid "Where to redirect if user cancels password entry. Leave blank to use shop page."
+msgstr ""
+
+msgid "Save Settings"
+msgstr ""
+
+msgid "How It Works"
+msgstr ""
+
+msgid "Enable protection for one or more categories by toggling the switch."
+msgstr ""
+
+msgid "Set a unique password for each protected category."
+msgstr ""
+
+msgid "Products in protected categories will be hidden from shop pages, search results, and related products."
+msgstr ""
+
+msgid "When customers try to access a protected category, they will see a password form."
+msgstr ""
+
+msgid "After entering the correct password, they can view all products in that category."
+msgstr ""
+
+msgid "Access is granted for the duration specified in Session Duration setting."
+msgstr ""
+
+msgid "Security Note:"
+msgstr ""
+
+msgid "Passwords are encrypted using WordPress security functions. Each category can have a different password."
+msgstr ""
+
+#: includes/class-password-handler.php
+msgid "Invalid request. Please try again."
+msgstr ""
+
+msgid "This category is not protected."
+msgstr ""
+
+msgid "Password not configured for this category."
+msgstr ""
+
+msgid "Access granted! Redirecting..."
+msgstr ""
+
+#: public/templates/password-form.php
+msgid "Unlock Category"
+msgstr ""
+
+msgid "Back to Shop"
+msgstr ""

@@ -1,0 +1,223 @@
+/* Woo-Protect Public Styles */
+
+.woo-protect-password-page {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.woo-protect-password-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.woo-protect-password-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+}
+
+/* Lock Icon */
+.woo-protect-lock-icon {
+    margin-bottom: 20px;
+}
+
+.woo-protect-lock-icon svg {
+    color: #2271b1;
+    width: 64px;
+    height: 64px;
+}
+
+/* Title */
+.woo-protect-title {
+    font-size: 28px;
+    font-weight: 600;
+    color: #1e1e1e;
+    margin: 0 0 10px 0;
+    line-height: 1.3;
+}
+
+/* Category Name */
+.woo-protect-category-name {
+    font-size: 18px;
+    color: #2271b1;
+    font-weight: 500;
+    margin: 0 0 15px 0;
+}
+
+/* Message */
+.woo-protect-message {
+    font-size: 15px;
+    color: #666;
+    margin: 0 0 30px 0;
+    line-height: 1.6;
+}
+
+/* Form */
+.woo-protect-form {
+    margin-bottom: 20px;
+}
+
+.woo-protect-form-group {
+    margin-bottom: 20px;
+}
+
+.woo-protect-input {
+    width: 100%;
+    padding: 14px 18px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.woo-protect-input:focus {
+    outline: none;
+    border-color: #2271b1;
+    box-shadow: 0 0 0 3px rgba(34, 113, 177, 0.1);
+}
+
+/* Error Message */
+.woo-protect-error {
+    background: #fef7f7;
+    border: 1px solid #dc3232;
+    border-radius: 6px;
+    color: #dc3232;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    text-align: left;
+}
+
+/* Submit Button */
+.woo-protect-submit {
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #2271b1 0%, #1a5a8a 100%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.woo-protect-submit:hover {
+    background: linear-gradient(135deg, #1a5a8a 0%, #134266 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(34, 113, 177, 0.3);
+}
+
+.woo-protect-submit:active {
+    transform: translateY(0);
+}
+
+.woo-protect-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Button Loader */
+.button-loader {
+    display: inline-flex;
+    align-items: center;
+}
+
+.spinner {
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Back Link */
+.woo-protect-back-link {
+    margin-top: 20px;
+}
+
+.woo-protect-back-link a {
+    color: #2271b1;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.woo-protect-back-link a:hover {
+    color: #1a5a8a;
+    text-decoration: underline;
+}
+
+/* Success State */
+.woo-protect-form.success .woo-protect-input {
+    border-color: #46b450;
+}
+
+.woo-protect-form.success .woo-protect-submit {
+    background: linear-gradient(135deg, #46b450 0%, #2d8f36 100%);
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    .woo-protect-password-card {
+        padding: 30px 20px;
+    }
+
+    .woo-protect-title {
+        font-size: 24px;
+    }
+
+    .woo-protect-category-name {
+        font-size: 16px;
+    }
+
+    .woo-protect-message {
+        font-size: 14px;
+    }
+
+    .woo-protect-lock-icon svg {
+        width: 48px;
+        height: 48px;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .woo-protect-password-card {
+        background: #1e1e1e;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .woo-protect-title {
+        color: #ffffff;
+    }
+
+    .woo-protect-message {
+        color: #b0b0b0;
+    }
+
+    .woo-protect-input {
+        background: #2a2a2a;
+        border-color: #444;
+        color: #ffffff;
+    }
+
+    .woo-protect-input:focus {
+        border-color: #2271b1;
+        background: #333;
+    }
+}
