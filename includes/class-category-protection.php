@@ -50,6 +50,14 @@ class Woo_Protect_Category_Protection {
                 return;
             }
 
+            // Prevent caching of protected pages (security measure)
+            nocache_headers();
+            if (!headers_sent()) {
+                header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
+                header('Pragma: no-cache');
+                header('Expires: 0');
+            }
+
             // Check if user has unlocked this category
             if ($this->is_category_unlocked($category->term_id)) {
                 return;
@@ -78,6 +86,14 @@ class Woo_Protect_Category_Protection {
             // Check if any category is protected
             foreach ($product_categories as $cat_id) {
                 if (Woo_Protect_Admin_Settings::is_category_protected($cat_id)) {
+                    // Prevent caching of protected product pages
+                    nocache_headers();
+                    if (!headers_sent()) {
+                        header('Cache-Control: no-cache, no-store, must-revalidate, max-age=0');
+                        header('Pragma: no-cache');
+                        header('Expires: 0');
+                    }
+
                     // Check if user has unlocked this category
                     if (!$this->is_category_unlocked($cat_id)) {
                         // Get category object for display

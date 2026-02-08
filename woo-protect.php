@@ -3,7 +3,7 @@
  * Plugin Name: Woo-Protect
  * Plugin URI: https://krefstudio.com/woo-protect
  * Description: Protect WooCommerce product categories with password authentication. Customers must enter the correct password to view protected category products.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Kref Studio
  * Author URI: https://krefstudio.com
  * Text Domain: woo-protect
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('WOO_PROTECT_VERSION', '1.1.0');
+define('WOO_PROTECT_VERSION', '1.2.0');
 define('WOO_PROTECT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WOO_PROTECT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('WOO_PROTECT_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -76,9 +76,13 @@ function woo_protect_init() {
     require_once WOO_PROTECT_PLUGIN_DIR . 'includes/class-admin-settings.php';
     require_once WOO_PROTECT_PLUGIN_DIR . 'includes/class-category-protection.php';
     require_once WOO_PROTECT_PLUGIN_DIR . 'includes/class-password-handler.php';
+    require_once WOO_PROTECT_PLUGIN_DIR . 'includes/class-cache-compatibility.php';
 
     // Initialize the main plugin class
     Woo_Protect::get_instance();
+    
+    // Initialize cache compatibility
+    new Woo_Protect_Cache_Compatibility();
 }
 add_action('plugins_loaded', 'woo_protect_init');
 
@@ -100,7 +104,7 @@ function woo_protect_activate() {
     $default_options = array(
         'lock_screen_title' => __('Protected Category', 'woo-protect'),
         'lock_screen_message' => __('This category is password protected. Please enter the password to continue.', 'woo-protect'),
-        'session_duration' => 24, // hours
+        'session_duration' => 24,
         'redirect_url' => '',
     );
 

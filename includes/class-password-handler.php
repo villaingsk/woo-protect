@@ -108,23 +108,9 @@ class Woo_Protect_Password_Handler {
      * @return bool
      */
     public function is_category_unlocked($category_id) {
-        if (!isset($_SESSION['woo_protect_unlocked'][$category_id])) {
-            return false;
-        }
-
-        $settings = Woo_Protect::get_instance()->get_settings();
-        $session_duration = absint($settings['session_duration']) * HOUR_IN_SECONDS;
-        $unlock_time = absint($_SESSION['woo_protect_unlocked'][$category_id]);
-        $current_time = time();
-
-        // Check if session is still valid
-        if (($current_time - $unlock_time) < $session_duration) {
-            return true;
-        }
-
-        // Session expired - remove from array
-        unset($_SESSION['woo_protect_unlocked'][$category_id]);
-        return false;
+        // Simply check if category is in the unlocked array
+        // No time limit - once unlocked, stays unlocked for the session
+        return isset($_SESSION['woo_protect_unlocked'][$category_id]);
     }
 
     /**
@@ -146,21 +132,7 @@ class Woo_Protect_Password_Handler {
             return array();
         }
 
-        $settings = Woo_Protect::get_instance()->get_settings();
-        $session_duration = absint($settings['session_duration']) * HOUR_IN_SECONDS;
-        $current_time = time();
-        $unlocked = array();
-
-        foreach ($_SESSION['woo_protect_unlocked'] as $cat_id => $timestamp) {
-            // Check if session is still valid
-            if (($current_time - $timestamp) < $session_duration) {
-                $unlocked[] = absint($cat_id);
-            } else {
-                // Remove expired session
-                unset($_SESSION['woo_protect_unlocked'][$cat_id]);
-            }
-        }
-
-        return $unlocked;
+        // Return all unlocked categories without time limit
+        return array_keys($_SESSION['woo_protect_unlocked']);
     }
 }

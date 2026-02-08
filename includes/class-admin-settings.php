@@ -104,20 +104,37 @@ class Woo_Protect_Admin_Settings {
                 if ($cat_id > 0 && isset($cat_data['enabled']) && $cat_data['enabled'] === 'yes') {
                     $password = sanitize_text_field($cat_data['password'] ?? '');
                     
+                    // Only update password if a new one is provided
                     if (!empty($password)) {
+                        // Hash the password for verification
+                        $hashed_password = wp_hash_password($password);
+                        
                         $sanitized_categories[$cat_id] = array(
                             'enabled' => 'yes',
-                            'password' => wp_hash_password($password),
+                            'password' => $hashed_password,
                         );
 
                         // Save to term meta
                         update_term_meta($cat_id, '_woo_protect_enabled', 'yes');
-                        update_term_meta($cat_id, '_woo_protect_password', wp_hash_password($password));
+                        update_term_meta($cat_id, '_woo_protect_password', $hashed_password);
+                        // Store plain text password for display purposes only
+                        update_term_meta($cat_id, '_woo_protect_password_display', $password);
+                    } else {
+                        // Keep existing password if field is empty
+                        $existing_password = get_term_meta($cat_id, '_woo_protect_password', true);
+                        if (!empty($existing_password)) {
+                            $sanitized_categories[$cat_id] = array(
+                                'enabled' => 'yes',
+                                'password' => $existing_password,
+                            );
+                            update_term_meta($cat_id, '_woo_protect_enabled', 'yes');
+                        }
                     }
                 } else {
                     // Remove protection
                     delete_term_meta($cat_id, '_woo_protect_enabled');
                     delete_term_meta($cat_id, '_woo_protect_password');
+                    delete_term_meta($cat_id, '_woo_protect_password_display');
                 }
             }
         }
@@ -152,5 +169,15 @@ class Woo_Protect_Admin_Settings {
         $password = get_term_meta($category_id, '_woo_protect_password', true);
         
         return ($enabled === 'yes' && !empty($password));
+    }
+
+    /**
+     * Get category password for display (plain text)
+     *
+     * @param int $category_id Category ID
+     * @return string|false
+     */
+    public static function get_category_password_display($category_id) {
+        return get_term_meta($category_id, '_woo_protect_password_display', true);
     }
 }

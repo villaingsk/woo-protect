@@ -44,6 +44,7 @@ if (!defined('ABSPATH')) {
                                 <?php foreach ($categories as $category) : ?>
                                     <?php
                                     $is_protected = Woo_Protect_Admin_Settings::is_category_protected($category->term_id);
+                                    $current_password = Woo_Protect_Admin_Settings::get_category_password_display($category->term_id);
                                     $product_count = $category->count;
                                     ?>
                                     <tr>
@@ -74,16 +75,24 @@ if (!defined('ABSPATH')) {
                                                 <input type="password" 
                                                        name="categories[<?php echo esc_attr($category->term_id); ?>][password]" 
                                                        class="regular-text password-input"
-                                                       placeholder="<?php esc_attr_e('Enter password', 'woo-protect'); ?>"
+                                                       placeholder="<?php esc_attr_e('Enter new password', 'woo-protect'); ?>"
+                                                       value="<?php echo $is_protected && $current_password ? esc_attr($current_password) : ''; ?>"
                                                        data-category-id="<?php echo esc_attr($category->term_id); ?>"
                                                        <?php echo $is_protected ? '' : 'disabled'; ?>>
                                                 <button type="button" class="button toggle-password" data-category-id="<?php echo esc_attr($category->term_id); ?>">
                                                     <span class="dashicons dashicons-visibility"></span>
                                                 </button>
                                             </div>
-                                            <p class="description">
-                                                <?php esc_html_e('Leave blank to keep existing password', 'woo-protect'); ?>
-                                            </p>
+                                            <?php if ($is_protected && $current_password) : ?>
+                                                <p class="description" style="color: #2271b1;">
+                                                    <span class="dashicons dashicons-yes-alt" style="font-size: 16px; width: 16px; height: 16px;"></span>
+                                                    <?php esc_html_e('Password can be used unlimited times', 'woo-protect'); ?>
+                                                </p>
+                                            <?php else : ?>
+                                                <p class="description">
+                                                    <?php esc_html_e('Leave blank to keep existing password', 'woo-protect'); ?>
+                                                </p>
+                                            <?php endif; ?>
                                         </td>
                                         <td class="num">
                                             <?php echo esc_html($product_count); ?>
@@ -160,11 +169,11 @@ if (!defined('ABSPATH')) {
                                            name="settings[session_duration]" 
                                            value="<?php echo esc_attr($settings['session_duration']); ?>" 
                                            min="1" 
-                                           max="168"
+                                           max="8760"
                                            class="small-text"> 
                                     <?php esc_html_e('hours', 'woo-protect'); ?>
                                     <p class="description">
-                                        <?php esc_html_e('How long customers can access protected categories after entering the password (1-168 hours).', 'woo-protect'); ?>
+                                        <?php esc_html_e('How long customers can access protected categories after entering the password (1-8760 hours = 1 year max).', 'woo-protect'); ?>
                                     </p>
                                 </td>
                             </tr>
@@ -206,13 +215,13 @@ if (!defined('ABSPATH')) {
                     <li><?php esc_html_e('Products in protected categories will be hidden from shop pages, search results, and related products.', 'woo-protect'); ?></li>
                     <li><?php esc_html_e('When customers try to access a protected category, they will see a password form.', 'woo-protect'); ?></li>
                     <li><?php esc_html_e('After entering the correct password, they can view all products in that category.', 'woo-protect'); ?></li>
-                    <li><?php esc_html_e('Access is granted for the duration specified in Session Duration setting.', 'woo-protect'); ?></li>
+                    <li><?php esc_html_e('Password can be used unlimited times within the session duration period.', 'woo-protect'); ?></li>
                 </ol>
 
                 <div class="woo-protect-info-box">
                     <span class="dashicons dashicons-info"></span>
                     <strong><?php esc_html_e('Security Note:', 'woo-protect'); ?></strong>
-                    <?php esc_html_e('Passwords are encrypted using WordPress security functions. Each category can have a different password.', 'woo-protect'); ?>
+                    <?php esc_html_e('Passwords are encrypted using WordPress security functions. Each category can have a different password. Access remains valid for the configured session duration.', 'woo-protect'); ?>
                 </div>
             </div>
         </div>

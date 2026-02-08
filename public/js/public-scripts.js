@@ -53,15 +53,17 @@
                     password: password
                 },
                 success: function (response) {
+                    console.log('Password verification response:', response);
+
                     if (response.success) {
                         // Success - show success state
                         $form.addClass('success');
                         $buttonText.text('✓ Access Granted!').show();
                         $buttonLoader.hide();
 
-                        // Redirect after short delay
+                        // Force reload the page to show unlocked content
                         setTimeout(function () {
-                            window.location.href = response.data.redirect;
+                            window.location.reload(true);
                         }, 500);
                     } else {
                         // Error - show error message
