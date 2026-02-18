@@ -3,7 +3,7 @@
  * Plugin Name: Woo-Protect
  * Plugin URI: https://krefstudio.com/woo-protect
  * Description: Protect WooCommerce product categories with password authentication. Customers must enter the correct password to view protected category products.
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: Kref Studio
  * Author URI: https://krefstudio.com
  * Text Domain: woo-protect
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('WOO_PROTECT_VERSION', '1.2.0');
+define('WOO_PROTECT_VERSION', '1.2.1');
 define('WOO_PROTECT_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WOO_PROTECT_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('WOO_PROTECT_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -49,6 +49,7 @@ function woo_protect_woocommerce_missing_notice() {
             <?php 
             echo wp_kses_post(
                 sprintf(
+                    /* translators: %s: WooCommerce installation URL */
                     __('<strong>Woo-Protect</strong> requires WooCommerce to be installed and active. Please <a href="%s">install WooCommerce</a> first.', 'woo-protect'),
                     admin_url('plugin-install.php?s=woocommerce&tab=search&type=term')
                 )

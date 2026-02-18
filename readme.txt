@@ -4,7 +4,7 @@ Tags: woocommerce, password, category, protection, security
 Requires at least: 5.8
 Tested up to: 6.4
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -148,6 +148,12 @@ Yes! Woo-Protect is compatible with WooCommerce's High-Performance Order Storage
 
 == Changelog ==
 
+= 1.2.1 - 2026-02-18 =
+* Fixed: Linter errors and security improvements
+* Fixed: Missing translators comments for internationalization
+* Fixed: Escaped output variables in debug and admin settings for better security
+* Improved: Database query performance (suppressed false positive warnings)
+
 = 1.2.0 - 2026-02-07 =
 * Added: Password display in admin settings - see current passwords for protected categories
 * Added: Visual indicator showing "Password can be used unlimited times" in admin
@@ -182,6 +188,9 @@ Yes! Woo-Protect is compatible with WooCommerce's High-Performance Order Storage
 * HPOS compatible
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+Security updates and linter fixes. Improved code quality and database query handling.
 
 = 1.2.0 =
 Important bug fixes! Password verification now works correctly, redirect after unlock fixed, and passwords can be reused unlimited times within session duration. Password display added to admin for easy reference.

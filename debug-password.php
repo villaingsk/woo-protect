@@ -6,6 +6,9 @@
 
 // Load WordPress
 require_once('../../../wp-load.php');
+if (!defined('ABSPATH')) {
+    exit;
+}
 
 if (!current_user_can('manage_options')) {
     die('Access denied');
@@ -28,10 +31,10 @@ foreach ($categories as $category) {
     $password_display = get_term_meta($category->term_id, '_woo_protect_password_display', true);
     
     echo "<tr>";
-    echo "<td>{$category->term_id}</td>";
-    echo "<td>{$category->name}</td>";
+    echo "<td>" . esc_html($category->term_id) . "</td>";
+    echo "<td>" . esc_html($category->name) . "</td>";
     echo "<td>" . ($is_protected === 'yes' ? 'YES' : 'NO') . "</td>";
-    echo "<td>" . (empty($password_hash) ? '<em>empty</em>' : substr($password_hash, 0, 30) . '...') . "</td>";
+    echo "<td>" . (empty($password_hash) ? '<em>empty</em>' : esc_html(substr($password_hash, 0, 30)) . '...') . "</td>";
     echo "<td>" . (empty($password_display) ? '<em>empty</em>' : '<strong>' . esc_html($password_display) . '</strong>') . "</td>";
     echo "</tr>";
 }

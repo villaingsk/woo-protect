@@ -229,6 +229,7 @@ class Woo_Protect_Category_Protection {
         $categories = get_terms(array(
             'taxonomy' => 'product_cat',
             'hide_empty' => false,
+            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
             'meta_query' => array(
                 array(
                     'key' => '_woo_protect_enabled',

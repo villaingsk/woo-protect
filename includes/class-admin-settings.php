@@ -53,7 +53,7 @@ class Woo_Protect_Admin_Settings {
     public function render_settings_page() {
         // Check user capabilities
         if (!current_user_can('manage_woocommerce')) {
-            wp_die(__('You do not have sufficient permissions to access this page.', 'woo-protect'));
+            wp_die(esc_html__('You do not have sufficient permissions to access this page.', 'woo-protect'));
         }
 
         // Get current settings
