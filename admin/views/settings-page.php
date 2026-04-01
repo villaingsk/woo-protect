@@ -41,31 +41,31 @@ if (!defined('ABSPATH')) {
                         </thead>
                         <tbody>
                             <?php if (!empty($categories)) : ?>
-                                <?php foreach ($categories as $category) : ?>
+                            <?php foreach ($categories as $woo_protect_category) : ?>
                                     <?php
-                                    $is_protected = Woo_Protect_Admin_Settings::is_category_protected($category->term_id);
-                                    $current_password = Woo_Protect_Admin_Settings::get_category_password_display($category->term_id);
-                                    $product_count = $category->count;
+                                    $woo_protect_is_protected = Woo_Protect_Admin_Settings::is_category_protected($woo_protect_category->term_id);
+                                    $woo_protect_current_password = Woo_Protect_Admin_Settings::get_category_password_display($woo_protect_category->term_id);
+                                    $woo_protect_product_count = $woo_protect_category->count;
                                     ?>
                                     <tr>
                                         <td class="check-column">
                                             <label class="woo-protect-toggle">
                                                 <input type="checkbox" 
-                                                       name="categories[<?php echo esc_attr($category->term_id); ?>][enabled]" 
+                                                       name="categories[<?php echo esc_attr($woo_protect_category->term_id); ?>][enabled]" 
                                                        value="yes"
                                                        class="category-toggle"
-                                                       data-category-id="<?php echo esc_attr($category->term_id); ?>"
-                                                       <?php checked($is_protected, true); ?>>
+                                                       data-category-id="<?php echo esc_attr($woo_protect_category->term_id); ?>"
+                                                       <?php checked($woo_protect_is_protected, true); ?>>
                                                 <span class="slider"></span>
                                             </label>
                                         </td>
                                         <td>
-                                            <strong><?php echo esc_html($category->name); ?></strong>
-                                            <?php if ($category->parent) : ?>
+                                            <strong><?php echo esc_html($woo_protect_category->name); ?></strong>
+                                            <?php if ($woo_protect_category->parent) : ?>
                                                 <?php
-                                                $parent = get_term($category->parent, 'product_cat');
-                                                if ($parent && !is_wp_error($parent)) {
-                                                    echo '<br><span class="description">' . esc_html__('Parent:', 'woo-protect') . ' ' . esc_html($parent->name) . '</span>';
+                                                $woo_protect_parent = get_term($woo_protect_category->parent, 'product_cat');
+                                                if ($woo_protect_parent && !is_wp_error($woo_protect_parent)) {
+                                                    echo '<br><span class="description">' . esc_html__('Parent:', 'woo-protect') . ' ' . esc_html($woo_protect_parent->name) . '</span>';
                                                 }
                                                 ?>
                                             <?php endif; ?>
@@ -73,17 +73,17 @@ if (!defined('ABSPATH')) {
                                         <td>
                                             <div class="password-field-wrapper">
                                                 <input type="password" 
-                                                       name="categories[<?php echo esc_attr($category->term_id); ?>][password]" 
+                                                       name="categories[<?php echo esc_attr($woo_protect_category->term_id); ?>][password]" 
                                                        class="regular-text password-input"
                                                        placeholder="<?php esc_attr_e('Enter new password', 'woo-protect'); ?>"
-                                                       value="<?php echo $is_protected && $current_password ? esc_attr($current_password) : ''; ?>"
-                                                       data-category-id="<?php echo esc_attr($category->term_id); ?>"
-                                                       <?php echo $is_protected ? '' : 'disabled'; ?>>
-                                                <button type="button" class="button toggle-password" data-category-id="<?php echo esc_attr($category->term_id); ?>">
+                                                       value="<?php echo $woo_protect_is_protected && $woo_protect_current_password ? esc_attr($woo_protect_current_password) : ''; ?>"
+                                                       data-category-id="<?php echo esc_attr($woo_protect_category->term_id); ?>"
+                                                       <?php echo $woo_protect_is_protected ? '' : 'disabled'; ?>>
+                                                <button type="button" class="button toggle-password" data-category-id="<?php echo esc_attr($woo_protect_category->term_id); ?>">
                                                     <span class="dashicons dashicons-visibility"></span>
                                                 </button>
                                             </div>
-                                            <?php if ($is_protected && $current_password) : ?>
+                                            <?php if ($woo_protect_is_protected && $woo_protect_current_password) : ?>
                                                 <p class="description" style="color: #2271b1;">
                                                     <span class="dashicons dashicons-yes-alt" style="font-size: 16px; width: 16px; height: 16px;"></span>
                                                     <?php esc_html_e('Password can be used unlimited times', 'woo-protect'); ?>
@@ -95,7 +95,7 @@ if (!defined('ABSPATH')) {
                                             <?php endif; ?>
                                         </td>
                                         <td class="num">
-                                            <?php echo esc_html($product_count); ?>
+                                            <?php echo esc_html($woo_protect_product_count); ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

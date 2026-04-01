@@ -68,9 +68,6 @@ class Woo_Protect {
      * Initialize WordPress hooks
      */
     private function init_hooks() {
-        // Start session if not already started
-        add_action('init', array($this, 'start_session'), 1);
-
         // Enqueue scripts and styles
         add_action('admin_enqueue_scripts', array($this, 'admin_enqueue_scripts'));
         add_action('wp_enqueue_scripts', array($this, 'public_enqueue_scripts'));
@@ -93,15 +90,6 @@ class Woo_Protect {
 
         // Initialize password handler
         $this->password_handler = new Woo_Protect_Password_Handler();
-    }
-
-    /**
-     * Start PHP session
-     */
-    public function start_session() {
-        if (!session_id() && !headers_sent()) {
-            session_start();
-        }
     }
 
     /**
@@ -147,6 +135,10 @@ class Woo_Protect {
      * Enqueue public scripts and styles
      */
     public function public_enqueue_scripts() {
+        if (!Woo_Protect_Category_Protection::should_enqueue_public_assets()) {
+            return;
+        }
+
         // Enqueue public CSS
         wp_enqueue_style(
             'woo-protect-public',

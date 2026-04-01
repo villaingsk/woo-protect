@@ -17,7 +17,7 @@ if (!current_user_can('manage_options')) {
 echo "<h1>Woo-Protect Password Debug</h1>";
 
 // Get all product categories
-$categories = get_terms(array(
+$woo_protect_categories = get_terms(array(
     'taxonomy' => 'product_cat',
     'hide_empty' => false,
 ));
@@ -25,17 +25,17 @@ $categories = get_terms(array(
 echo "<table border='1' cellpadding='10'>";
 echo "<tr><th>Category ID</th><th>Category Name</th><th>Protected</th><th>Password Hash</th><th>Password Display</th></tr>";
 
-foreach ($categories as $category) {
-    $is_protected = get_term_meta($category->term_id, '_woo_protect_enabled', true);
-    $password_hash = get_term_meta($category->term_id, '_woo_protect_password', true);
-    $password_display = get_term_meta($category->term_id, '_woo_protect_password_display', true);
+foreach ($woo_protect_categories as $woo_protect_category) {
+    $woo_protect_is_protected = get_term_meta($woo_protect_category->term_id, '_woo_protect_enabled', true);
+    $woo_protect_password_hash = get_term_meta($woo_protect_category->term_id, '_woo_protect_password', true);
+    $woo_protect_password_display = get_term_meta($woo_protect_category->term_id, '_woo_protect_password_display', true);
     
     echo "<tr>";
-    echo "<td>" . esc_html($category->term_id) . "</td>";
-    echo "<td>" . esc_html($category->name) . "</td>";
-    echo "<td>" . ($is_protected === 'yes' ? 'YES' : 'NO') . "</td>";
-    echo "<td>" . (empty($password_hash) ? '<em>empty</em>' : esc_html(substr($password_hash, 0, 30)) . '...') . "</td>";
-    echo "<td>" . (empty($password_display) ? '<em>empty</em>' : '<strong>' . esc_html($password_display) . '</strong>') . "</td>";
+    echo "<td>" . esc_html($woo_protect_category->term_id) . "</td>";
+    echo "<td>" . esc_html($woo_protect_category->name) . "</td>";
+    echo "<td>" . ($woo_protect_is_protected === 'yes' ? 'YES' : 'NO') . "</td>";
+    echo "<td>" . (empty($woo_protect_password_hash) ? '<em>empty</em>' : esc_html(substr($woo_protect_password_hash, 0, 30)) . '...') . "</td>";
+    echo "<td>" . (empty($woo_protect_password_display) ? '<em>empty</em>' : '<strong>' . esc_html($woo_protect_password_display) . '</strong>') . "</td>";
     echo "</tr>";
 }
 

@@ -11,9 +11,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-$settings = Woo_Protect::get_instance()->get_settings();
-$category_name = isset($category) ? $category->name : '';
-$category_id = isset($category) ? $category->term_id : 0;
+$woo_protect_settings = Woo_Protect::get_instance()->get_settings();
+$woo_protect_category_name = isset($category) ? $category->name : '';
+$woo_protect_category_id = isset($category) ? $category->term_id : 0;
 ?>
 
 <div class="woocommerce woo-protect-password-page">
@@ -27,45 +27,39 @@ $category_id = isset($category) ? $category->term_id : 0;
                 </svg>
             </div>
 
-            <!-- Title -->
             <h1 class="woo-protect-title">
-                <?php echo esc_html($settings['lock_screen_title']); ?>
+                <?php echo esc_html($woo_protect_settings['lock_screen_title']); ?>
             </h1>
 
-            <!-- Category Name -->
-            <?php if ($category_name) : ?>
+            <?php if ($woo_protect_category_name) : ?>
                 <p class="woo-protect-category-name">
-                    <?php echo esc_html($category_name); ?>
+                    <?php echo esc_html($woo_protect_category_name); ?>
                 </p>
             <?php endif; ?>
 
-            <!-- Message -->
             <p class="woo-protect-message">
-                <?php echo esc_html($settings['lock_screen_message']); ?>
+                <?php echo esc_html($woo_protect_settings['lock_screen_message']); ?>
             </p>
 
-            <!-- Password Form -->
             <form id="woo-protect-password-form" class="woo-protect-form" method="post">
                 <?php wp_nonce_field('woo_protect_public_nonce', 'woo_protect_nonce'); ?>
-                <input type="hidden" name="category_id" value="<?php echo esc_attr($category_id); ?>">
+                <input type="hidden" name="category_id" value="<?php echo esc_attr($woo_protect_category_id); ?>">
 
                 <div class="woo-protect-form-group">
                     <label for="woo-protect-password" class="screen-reader-text">
                         <?php esc_html_e('Password', 'woo-protect'); ?>
                     </label>
-                    <input type="password" 
-                           id="woo-protect-password" 
-                           name="password" 
-                           class="woo-protect-input" 
-                           placeholder="<?php esc_attr_e('Enter password', 'woo-protect'); ?>" 
+                    <input type="password"
+                           id="woo-protect-password"
+                           name="password"
+                           class="woo-protect-input"
+                           placeholder="<?php esc_attr_e('Enter password', 'woo-protect'); ?>"
                            required
                            autocomplete="off">
                 </div>
 
-                <!-- Error Message -->
                 <div id="woo-protect-error" class="woo-protect-error" style="display: none;"></div>
 
-                <!-- Submit Button -->
                 <button type="submit" class="woo-protect-submit">
                     <span class="button-text"><?php esc_html_e('Unlock Category', 'woo-protect'); ?></span>
                     <span class="button-loader" style="display: none;">
@@ -83,10 +77,9 @@ $category_id = isset($category) ? $category->term_id : 0;
                 </button>
             </form>
 
-            <!-- Back Link -->
             <div class="woo-protect-back-link">
-                <a href="<?php echo esc_url($settings['redirect_url'] ?: wc_get_page_permalink('shop')); ?>">
-                    ← <?php esc_html_e('Back to Shop', 'woo-protect'); ?>
+                <a href="<?php echo esc_url($woo_protect_settings['redirect_url'] ?: wc_get_page_permalink('shop')); ?>">
+                    &larr; <?php esc_html_e('Back to Shop', 'woo-protect'); ?>
                 </a>
             </div>
         </div>

@@ -43,8 +43,67 @@ class Woo_Protect_Admin_Settings {
      * Register settings
      */
     public function register_settings() {
-        register_setting('woo_protect_settings_group', 'woo_protect_settings');
-        register_setting('woo_protect_settings_group', 'woo_protect_categories');
+        register_setting(
+            'woo_protect_settings_group',
+            'woo_protect_settings',
+            array($this, 'sanitize_settings_option')
+        );
+        register_setting(
+            'woo_protect_settings_group',
+            'woo_protect_categories',
+            array($this, 'sanitize_categories_option')
+        );
+    }
+
+    /**
+     * Sanitize global plugin settings option.
+     *
+     * @param array $settings Settings payload.
+     * @return array
+     */
+    public function sanitize_settings_option($settings) {
+        if (!is_array($settings)) {
+            return array();
+        }
+
+        return array(
+            'lock_screen_title' => sanitize_text_field($settings['lock_screen_title'] ?? ''),
+            'lock_screen_message' => sanitize_textarea_field($settings['lock_screen_message'] ?? ''),
+            'session_duration' => absint($settings['session_duration'] ?? 24),
+            'redirect_url' => esc_url_raw($settings['redirect_url'] ?? ''),
+        );
+    }
+
+    /**
+     * Sanitize protected categories option payload.
+     *
+     * @param array $categories Categories payload.
+     * @return array
+     */
+    public function sanitize_categories_option($categories) {
+        if (!is_array($categories)) {
+            return array();
+        }
+
+        $sanitized_categories = array();
+        foreach ($categories as $cat_id => $cat_data) {
+            $cat_id = absint($cat_id);
+            if ($cat_id <= 0 || !is_array($cat_data)) {
+                continue;
+            }
+
+            $enabled = isset($cat_data['enabled']) ? sanitize_text_field($cat_data['enabled']) : '';
+            if ('yes' !== $enabled) {
+                continue;
+            }
+
+            $sanitized_categories[$cat_id] = array(
+                'enabled' => 'yes',
+                'password' => sanitize_text_field($cat_data['password'] ?? ''),
+            );
+        }
+
+        return $sanitized_categories;
     }
 
     /**
@@ -85,8 +144,12 @@ class Woo_Protect_Admin_Settings {
         }
 
         // Get posted data
-        $settings = isset($_POST['settings']) ? $_POST['settings'] : array();
-        $categories = isset($_POST['categories']) ? $_POST['categories'] : array();
+        $settings = (isset($_POST['settings']) && is_array($_POST['settings']))
+            ? wp_unslash($_POST['settings'])
+            : array();
+        $categories = (isset($_POST['categories']) && is_array($_POST['categories']))
+            ? wp_unslash($_POST['categories'])
+            : array();
 
         // Sanitize settings
         $sanitized_settings = array(
@@ -101,7 +164,10 @@ class Woo_Protect_Admin_Settings {
         if (is_array($categories)) {
             foreach ($categories as $cat_id => $cat_data) {
                 $cat_id = absint($cat_id);
-                if ($cat_id > 0 && isset($cat_data['enabled']) && $cat_data['enabled'] === 'yes') {
+                $enabled = (is_array($cat_data) && isset($cat_data['enabled']))
+                    ? sanitize_text_field($cat_data['enabled'])
+                    : '';
+                if ($cat_id > 0 && 'yes' === $enabled) {
                     $password = sanitize_text_field($cat_data['password'] ?? '');
                     
                     // Only update password if a new one is provided
@@ -169,6 +235,37 @@ class Woo_Protect_Admin_Settings {
         $password = get_term_meta($category_id, '_woo_protect_password', true);
         
         return ($enabled === 'yes' && !empty($password));
+    }
+
+    /**
+     * Get all protected category IDs from the saved plugin option.
+     *
+     * @return array<int>
+     */
+    public static function get_protected_category_ids() {
+        $categories = get_option('woo_protect_categories', array());
+
+        if (!is_array($categories) || empty($categories)) {
+            return array();
+        }
+
+        $protected_ids = array();
+
+        foreach ($categories as $cat_id => $cat_data) {
+            $cat_id = absint($cat_id);
+
+            if (
+                $cat_id > 0 &&
+                is_array($cat_data) &&
+                isset($cat_data['enabled'], $cat_data['password']) &&
+                'yes' === $cat_data['enabled'] &&
+                !empty($cat_data['password'])
+            ) {
+                $protected_ids[] = $cat_id;
+            }
+        }
+
+        return $protected_ids;
     }
 
     /**

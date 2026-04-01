@@ -1,10 +1,10 @@
-=== Woo-Protect ===
+=== Category Protect for WooCommerce ===
 Contributors: krefstudio
 Tags: woocommerce, password, category, protection, security
 Requires at least: 5.8
-Tested up to: 6.4
+Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,7 +49,7 @@ Protect WooCommerce product categories with password authentication. Customers m
 4. Customize the lock screen title and message
 5. Save your settings
 
-When customers try to access a protected category, they'll see a beautiful password form. After entering the correct password, they can view all products in that category. Access remains active for the entire browser session - no time limits!
+When customers try to access a protected category, they'll see a beautiful password form. After entering the correct password, they can view all products in that category. Access remains active for the configured session duration.
 
 = Perfect For =
 
@@ -104,11 +104,11 @@ Yes! You can protect as many categories as you want, each with its own unique pa
 
 = How long do customers stay logged in? =
 
-Once customers enter the correct password, they have unlimited access to the protected category for their entire browser session. There are no time restrictions - access remains active until they close their browser or the PHP session expires.
+Once customers enter the correct password, they keep access to the protected category for the configured session duration.
 
 = Are the passwords secure? =
 
-Yes! All passwords are encrypted using WordPress's built-in security functions (`wp_hash_password`). They are never stored in plain text.
+Yes! Password verification uses WordPress's built-in security functions (`wp_hash_password`) for stored password hashes.
 
 = Can I customize the password form? =
 
@@ -147,6 +147,15 @@ Yes! Woo-Protect is compatible with WooCommerce's High-Performance Order Storage
 5. Admin interface showing protected categories
 
 == Changelog ==
+
+= 1.2.2 - 2026-04-01 =
+* Improved: Reduced frontend overhead by preferring WooCommerce session storage instead of forcing native PHP sessions on every request
+* Improved: Public lock-screen assets now load only on protected category and protected product requests
+* Improved: Protected category lookups now reuse saved plugin options instead of repeated term meta queries
+* Improved: Lock screen card alignment refined to stay centered across desktop, tablet, and mobile
+* Fixed: Frontend lock-screen text encoding issues on success state and back link
+* Fixed: Shake animation styles moved from JavaScript injection into the public stylesheet
+* Fixed: Intentional product exclusion tax queries are now documented for PHPCS to avoid false-positive slow-query warnings
 
 = 1.2.1 - 2026-02-18 =
 * Fixed: Linter errors and security improvements
@@ -189,6 +198,9 @@ Yes! Woo-Protect is compatible with WooCommerce's High-Performance Order Storage
 
 == Upgrade Notice ==
 
+= 1.2.2 =
+Performance and frontend polish update. Reduced session overhead, limited public asset loading, improved lock-screen centering, and cleaned up frontend presentation.
+
 = 1.2.1 =
 Security updates and linter fixes. Improved code quality and database query handling.
 
@@ -207,4 +219,4 @@ For support, feature requests, or bug reports, please visit [Kref Studio](https:
 
 == Privacy Policy ==
 
-Woo-Protect does not collect or store any personal data. Password verification is handled via PHP sessions, which are temporary and deleted when the browser is closed or the session expires.
+Woo-Protect does not collect or store any personal data. Password verification state is stored temporarily in the active WooCommerce or server-side session layer and expires according to the configured session duration.

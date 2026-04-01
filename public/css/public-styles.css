@@ -2,25 +2,33 @@
 
 .woo-protect-password-page {
     min-height: 60vh;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .woo-protect-password-container {
     width: 100%;
     max-width: 500px;
+    display: flex;
+    justify-content: center;
     margin: 0 auto;
 }
 
 .woo-protect-password-card {
+    width: 100%;
+    max-width: 500px;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     padding: 40px;
     text-align: center;
     margin: 0 auto;
+    box-sizing: border-box;
 }
 
 /* Lock Icon */
@@ -172,8 +180,35 @@
     background: linear-gradient(135deg, #46b450 0%, #2d8f36 100%);
 }
 
+.shake {
+    animation: woo-protect-shake 0.5s;
+}
+
+@keyframes woo-protect-shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-10px);
+    }
+
+    20%, 40%, 60%, 80% {
+        transform: translateX(10px);
+    }
+}
+
 /* Responsive */
 @media screen and (max-width: 600px) {
+    .woo-protect-password-page {
+        padding: 24px 16px;
+    }
+
+    .woo-protect-password-container,
+    .woo-protect-password-card {
+        max-width: 100%;
+    }
+
     .woo-protect-password-card {
         padding: 30px 20px;
     }

@@ -96,18 +96,23 @@ class Woo_Protect_Cache_Compatibility {
         if ($this->is_protected_page()) {
             // Set no-cache constants
             if (!defined('DONOTCACHEPAGE')) {
+                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
                 define('DONOTCACHEPAGE', true);
             }
             if (!defined('DONOTCACHEDB')) {
+                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
                 define('DONOTCACHEDB', true);
             }
             if (!defined('DONOTMINIFY')) {
+                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
                 define('DONOTMINIFY', true);
             }
             if (!defined('DONOTCDN')) {
+                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
                 define('DONOTCDN', true);
             }
             if (!defined('DONOTCACHEOBJECT')) {
+                // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound
                 define('DONOTCACHEOBJECT', true);
             }
         }
@@ -150,17 +155,17 @@ class Woo_Protect_Cache_Compatibility {
      */
     private function get_protected_category_urls() {
         $urls = array();
-        
+
+        $protected_category_ids = Woo_Protect_Admin_Settings::get_protected_category_ids();
+
+        if (empty($protected_category_ids)) {
+            return $urls;
+        }
+
         $categories = get_terms(array(
             'taxonomy' => 'product_cat',
             'hide_empty' => false,
-            // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-            'meta_query' => array(
-                array(
-                    'key' => '_woo_protect_enabled',
-                    'value' => 'yes',
-                ),
-            ),
+            'include' => $protected_category_ids,
         ));
 
         if (!is_wp_error($categories) && !empty($categories)) {
